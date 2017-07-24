@@ -1,6 +1,6 @@
 FROM python:2
 
-ENV trac_version=cf0b57499eb658fdb7430311f3e08f814b538c49
+ENV trac_version=87725e58ed4b75b7c4f53a7b6d96f79094f8f08f
 
 # https://trac.edgewall.org/browser/trunk/INSTALL.rst
 RUN easy_install \
