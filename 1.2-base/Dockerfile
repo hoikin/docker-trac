@@ -1,19 +1,15 @@
-FROM python:2
+FROM centos
 
-ENV trac_version=87725e58ed4b75b7c4f53a7b6d96f79094f8f08f
+RUN yum -y install epel-release wget python-pip
 
-# https://trac.edgewall.org/browser/trunk/INSTALL.rst
-RUN easy_install \
-  Genshi \
-  pytz \
-  Babel \
-  docutils \
-  Pygments \
-  MySQL-python==1.2.5
+RUN pip install --upgrade pip
 
-RUN cd /usr/src && \
-  curl -sL https://codeload.github.com/edgewall/trac/tar.gz/$trac_version | tar xvz && \
-  cd trac-$trac_version/ && \
-  python ./setup.py install && \
-  cd .. && \
-  rm -Rf trac-$trac_version/
+RUN pip install Genshi
+
+RUN easy_install Trac
+
+RUN trac-admin /root/trac-project initenv
+
+RUN yum -t install subversion subversion-python
+
+RUN tracd --port 80 /root/trac-project
